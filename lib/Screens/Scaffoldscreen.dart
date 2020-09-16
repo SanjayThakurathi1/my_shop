@@ -2,8 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:my_shop/Screens/cart_screen.dart';
 import 'package:my_shop/provider/cart.dart';
 import 'package:my_shop/widgets/badge.dart';
+import 'package:my_shop/widgets/drawer.dart';
 import 'package:provider/provider.dart';
 
 import '../Screens/home_screen.dart';
@@ -27,6 +29,19 @@ class _ScaffoldscreenState extends State<Scaffoldscreen> {
             appBar: AppBar(
               title: Text("MyShop"),
               actions: [
+                Consumer<Cart>(
+                  builder: (_, cart, ch) => Badge(
+                    child: ch,
+                    value: cart.itemcount.toString(),
+                    //amount of items in the cart
+                  ),
+                  child: IconButton(
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(CartScreen.routeName);
+                      },
+                      icon: Icon(Icons
+                          .shopping_cart)), //here this iconbutton doesnt build again
+                ),
                 PopupMenuButton(
                     onSelected: (filteroptions selectedvalue) {
                       if (selectedvalue == filteroptions.favourite) {
@@ -50,20 +65,10 @@ class _ScaffoldscreenState extends State<Scaffoldscreen> {
                             value: filteroptions.all,
                           )
                         ]),
-                Consumer<Cart>(
-                  builder: (_, cart, ch) => Badge(
-                    child: ch,
-                    value: cart.itemcount.toString(),
-                    //amount of items in the cart
-                  ),
-                  child: IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons
-                          .shopping_cart)), //here this iconbutton doesnt build again
-                )
               ],
               centerTitle: true,
             ),
+            drawer: Draweer(),
             body: HomeScreen(
               favproduct: favproducts,
             ),

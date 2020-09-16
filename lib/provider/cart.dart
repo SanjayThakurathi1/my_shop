@@ -19,6 +19,15 @@ class Cart with ChangeNotifier {
     return _cartitems.length;
   }
 
+  double get totalsumofproduct {
+    var total = 0.0;
+    _cartitems.forEach((key, cartitem) {
+      total = total + cartitem.quantity * cartitem.price;
+    });
+
+    return total;
+  }
+
   Map<String, CartItem> get cartitems {
     return {..._cartitems}; //added to new map to return a copy
   }
@@ -48,6 +57,34 @@ class Cart with ChangeNotifier {
       //this is added to a map
     }
 
+    notifyListeners();
+  }
+
+  void deleteitemfromcart(String productId) {
+    _cartitems.remove(productId);
+    notifyListeners();
+  }
+
+  void deletesingleitemfromcart(String productId) {
+    if (!_cartitems.containsKey(productId)) {
+      return; //it just cancel the execution of function if it doesnot contain
+    }
+    if (_cartitems[productId].quantity > 1) {
+      _cartitems.update(
+          productId,
+          (existingcartitem) => CartItem(
+              id: existingcartitem.id,
+              price: existingcartitem.price,
+              quantity: existingcartitem.quantity - 1,
+              title: existingcartitem.title));
+    } else {
+      _cartitems.remove(productId);
+    }
+    notifyListeners();
+  }
+
+  void clearCart() {
+    _cartitems = {};
     notifyListeners();
   }
 }

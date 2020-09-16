@@ -14,7 +14,6 @@ class Badge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(value);
     return Stack(
       alignment: Alignment.center,
       children: [

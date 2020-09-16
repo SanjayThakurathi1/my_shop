@@ -16,6 +16,34 @@ class ProductDetail extends StatelessWidget {
         centerTitle: true,
         title: Text(loadedproducts.title ?? ""),
       ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              height: 300,
+              width: double.infinity,
+              child: Image.network(
+                loadedproducts.imageUrl,
+                fit: BoxFit.cover,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress != null) {
+                    return Image.asset("Assets/spinner.gif");
+                  }
+                  return child;
+                },
+              ),
+            ),
+            SizedBox(
+              height: 12,
+            ),
+            Text(loadedproducts.description ?? ""),
+            SizedBox(
+              height: 12,
+            ),
+            Text(loadedproducts.price.toString() ?? ""),
+          ],
+        ),
+      ),
     );
   }
 }

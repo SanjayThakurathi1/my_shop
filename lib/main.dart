@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:my_shop/Screens/Scaffoldscreen.dart';
+import 'package:my_shop/Screens/cart_screen.dart';
+import 'package:my_shop/Screens/edit_product_screen.dart';
+import 'package:my_shop/Screens/order_screen.dart';
 import 'package:my_shop/Screens/productdetail.dart';
+import 'package:my_shop/Screens/user_product_screen.dart';
 import 'package:my_shop/provider/cart.dart';
+import 'package:my_shop/provider/orders.dart';
 import 'package:my_shop/provider/product_provider.dart';
 
 import 'package:provider/provider.dart';
@@ -29,7 +34,8 @@ class MyApp extends StatelessWidget {
               ChangeNotifierProvider.value(
                 value: ProductProvider(),
               ),
-              ChangeNotifierProvider.value(value: Cart())
+              ChangeNotifierProvider.value(value: Cart()),
+              ChangeNotifierProvider.value(value: Orders()),
             ],
             child: MaterialApp(
               theme: ThemeData(
@@ -38,7 +44,13 @@ class MyApp extends StatelessWidget {
                   fontFamily: 'Lato'),
               title: "MyShop",
               home: Scaffoldscreen(),
-              routes: {ProductDetail.routeName: (context) => ProductDetail()},
+              routes: {
+                ProductDetail.routeName: (context) => ProductDetail(),
+                CartScreen.routeName: (context) => CartScreen(),
+                OrderScreen.routeName: (context) => OrderScreen(),
+                UserProductScreen.routeName: (context) => UserProductScreen(),
+                EditProductScreen.routeName: (context) => EditProductScreen()
+              },
             ),
           );
   }
