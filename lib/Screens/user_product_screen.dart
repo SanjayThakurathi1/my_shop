@@ -7,6 +7,11 @@ import '../widgets/drawer.dart';
 
 class UserProductScreen extends StatelessWidget {
   static const routeName = "/user_product_screen";
+
+  Future<void> _refreshproduct(BuildContext context) async {
+    await Provider.of<ProductProvider>(context).fetchAndSetProduct();
+  }
+
   @override
   Widget build(BuildContext context) {
     final productitems = Provider.of<ProductProvider>(context);
@@ -23,21 +28,24 @@ class UserProductScreen extends StatelessWidget {
         ],
       ),
       drawer: Draweer(), //title and icon will not rebuilt
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            ListView.builder(
-              shrinkWrap: true,
-              itemCount: productitems.items.length,
-              itemBuilder: (_, index) => UserProductItem(
-                id: productitems.items[index].id,
-                imgUrl: productitems.items[index].imageUrl,
-                title: productitems.items[index].title,
+      body: RefreshIndicator(
+        onRefresh: () => _refreshproduct(context),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              ListView.builder(
+                shrinkWrap: true,
+                itemCount: productitems.items.length,
+                itemBuilder: (_, index) => UserProductItem(
+                  id: productitems.items[index].id,
+                  imgUrl: productitems.items[index].imageUrl,
+                  title: productitems.items[index].title,
+                ),
               ),
-            ),
-            Divider()
-          ],
+              Divider()
+            ],
+          ),
         ),
       ),
     );

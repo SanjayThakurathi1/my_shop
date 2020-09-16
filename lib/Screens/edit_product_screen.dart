@@ -73,7 +73,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
     }
   }
 
-  void _saveform() {
+  Future<void> _saveform() async {
     if (!_formkey.currentState.validate()) {
       return; //it terminate whole fxn if it will be not true
     }
@@ -91,18 +91,18 @@ class _EditProductScreenState extends State<EditProductScreen> {
       });
       Navigator.of(context).pop();
     } else {
-      Provider.of<ProductProvider>(context, listen: false)
-          .addProduct(_editedproducts)
-          .then((_) {
-        setState(() {
-          _loaded = false;
-        });
-        Navigator.of(context).pop();
-      }).catchError((error) {
-        showDialog(
+      try {
+        await Provider.of<ProductProvider>(context, listen: false)
+            .addProduct(_editedproducts);
+      } catch (e) {
+        await showDialog(
             context: context,
             builder: (_) => AlertDialog(
-                  title: Text("An Error Occured"),
+                  title: Text(
+                    "An Error Occured",
+                    style: TextStyle(
+                        color: Colors.red, fontWeight: FontWeight.bold),
+                  ),
                   content: Text("Something went Wrong"),
                   actions: [
                     FlatButton(
@@ -112,7 +112,12 @@ class _EditProductScreenState extends State<EditProductScreen> {
                         child: Text("OK"))
                   ],
                 ));
-      });
+      } finally {
+        setState(() {
+          _loaded = false;
+        });
+        Navigator.of(context).pop();
+      }
     }
   }
 
