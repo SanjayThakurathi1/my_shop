@@ -31,7 +31,7 @@ class ProductProvider with ChangeNotifier {
     //   description: 'Warm and cozy - exactly what you need for the winter.',
     //   price: 19.99,
     //   imageUrl:
-    //       'https://live.staticflickr.com/4043/4438260868_cc79b3369d_z.jpg',
+    //       '',
     // ),
     // Product(
     //   id: 'p4',
@@ -82,6 +82,9 @@ class ProductProvider with ChangeNotifier {
       // print(json.decode(response.body));
       List<Product> loadingproduct = [];
       var jsondata = json.decode(response.body) as Map<String, dynamic>;
+      if (jsondata == null) {
+        return;
+      }
       jsondata.forEach((prodId, prodValue) {
         loadingproduct.add(Product(
             id: prodId,
@@ -128,7 +131,18 @@ class ProductProvider with ChangeNotifier {
     // _items.insert(0, Product(id: null, description: null, price: null, imageUrl: null, title: null)) if want to insert at first
   }
 
-  void updateProduct(String id, Product product) {
+  Future<void> updateProduct(String id, Product product) async {
+    final url = 'https://myshop-7287e.firebaseio.com/products/$id.json';
+    //here with / we go deep  dive and must make it final
+    await https.patch(url,
+        body: json.encode({
+          'title': product.title,
+          'description': product.description,
+          'price': product.price,
+          'imgUrl': product
+              .imageUrl, //we we didnt add fav becoz if we dont add then it just replace other and aad it on it
+        }));
+
     final prodindex = _items.indexWhere((prod) => prod.id == id);
     if (prodindex > 0) {
       _items[prodindex] = product;
@@ -137,7 +151,19 @@ class ProductProvider with ChangeNotifier {
   }
 
   void deleteproduct(String id) {
-    _items.removeWhere((product) => product.id == id);
+    final url = 'https://myshop-7287e.firebaseio.com/products/$id.json';
+    final existingProductindex =
+        _items.indexWhere((element) => element.id == id);
+    var existingproduct = _items[existingProductindex];
+    _items.removeAt(existingProductindex);
+    //it remove from list not from memory
     notifyListeners();
+    https.delete(url).then((_) {
+      existingproduct = null;
+    }).catchError((_) {
+      _items.insert(existingProductindex, existingproduct);
+      //if it fails we  again insert existing product this is optimistic updating
+      notifyListeners();
+    });
   }
 }

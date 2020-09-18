@@ -84,12 +84,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
     //to edit existing product we must dio this
     if (_editedproducts.id != null) //this conform  that there is a existing id
     {
-      Provider.of<ProductProvider>(context, listen: false)
+      await Provider.of<ProductProvider>(context, listen: false)
           .updateProduct(_editedproducts.id, _editedproducts);
-      setState(() {
-        _loaded = false;
-      });
-      Navigator.of(context).pop();
     } else {
       try {
         await Provider.of<ProductProvider>(context, listen: false)
@@ -112,13 +108,18 @@ class _EditProductScreenState extends State<EditProductScreen> {
                         child: Text("OK"))
                   ],
                 ));
-      } finally {
-        setState(() {
-          _loaded = false;
-        });
-        Navigator.of(context).pop();
       }
+      //finally {
+      //   setState(() {
+      //     _loaded = false;
+      //   });
+      //   Navigator.of(context).pop();
+      // }
     }
+    setState(() {
+      _loaded = false;
+    });
+    Navigator.of(context).pop();
   }
 
   @override

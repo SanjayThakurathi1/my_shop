@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart'; //for required properties
+import 'package:http/http.dart' as https;
 
 class Product with ChangeNotifier {
   final String id;
@@ -16,8 +19,25 @@ class Product with ChangeNotifier {
       @required this.imageUrl,
       @required this.title});
 
-  void favtoggle() {
-    favourite = !favourite;
+  void _setfavValue(bool newValue) {
+    favourite = newValue;
     notifyListeners();
+  }
+
+  Future<void> favtoggle() async {
+    final oldStatus = favourite;
+    favourite = !favourite;
+    final url = 'https://myshop-7287e.firebaseio.com/products/$id.json';
+    try {
+      final response =
+          await https.patch(url, body: jsonEncode({'isFavourite': favourite}));
+      if (response.statusCode >= 400) {
+        // favourite = oldStatus;
+        _setfavValue(oldStatus);
+      }
+      notifyListeners();
+    } catch (e) {
+      _setfavValue(oldStatus);
+    }
   }
 }

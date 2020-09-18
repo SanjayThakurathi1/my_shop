@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:my_shop/provider/cart.dart';
+import 'package:http/http.dart' as https;
 
 class OrderItem {
   final String id;
@@ -20,16 +23,67 @@ class Orders with ChangeNotifier {
     return [..._orderlist];
   }
 
-  void addOrder(List<CartItem> cartitem, double total) {
-    _orderlist.insert(
-        0,
-        OrderItem(
-            amount: total,
-            date: DateTime.now(),
-            id: DateTime.now().toString(),
-            cartitems: cartitem));
-    //adding order to the begining
+  Future<void> fetchAndSetOrder() async {
+    const url = 'https://myshop-7287e.firebaseio.com/orders.json';
 
-    notifyListeners();
+    try {
+      final response = await https.get(url);
+      print(jsonDecode(response.body));
+      List<OrderItem> orderitem = [];
+      var jsondata = json.decode(response.body) as Map<String, dynamic>;
+      if (jsondata == null) {
+        return; //terminate the fxn if this condn matches
+      }
+      jsondata.forEach((key, orderitems) {
+        orderitem.add(OrderItem(
+            amount: orderitems['totalAmount'],
+            date: DateTime.parse(orderitems['dateTime']),
+            id: key,
+            cartitems: (orderitems['cartItems'] as List<dynamic>)
+                .map((cart) => CartItem(
+                    id: cart['id'],
+                    price: cart['price'],
+                    quantity: cart['quantity'],
+                    title: cart['title']))
+                .toList()));
+      });
+      _orderlist = orderitem.reversed.toList();
+      notifyListeners();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> addOrder(List<CartItem> cartitem, double total) async {
+    const url = 'https://myshop-7287e.firebaseio.com/orders.json';
+    final timeStamp = DateTime.now();
+    try {
+      final response = await https.post(url,
+          body: jsonEncode({
+            'cartItems': cartitem
+                .map((cartitems) => {
+                      'id': cartitems.id,
+                      'title': cartitems.title,
+                      'quantity': cartitems.quantity,
+                      'price': cartitems.price
+                    })
+                .toList(),
+            'totalAmount': total,
+            'dateTime': timeStamp.toIso8601String()
+          }));
+      print(jsonDecode(response.body));
+
+      _orderlist.insert(
+          0,
+          OrderItem(
+              amount: total,
+              date: timeStamp,
+              id: jsonDecode(response.body)['name'],
+              cartitems: cartitem));
+      notifyListeners();
+    } catch (e) {
+      notifyListeners();
+    }
+    //adding order to the begining
   }
 }
