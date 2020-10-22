@@ -8,6 +8,8 @@ import 'package:my_shop/provider/product.dart';
 import 'package:http/http.dart' as https;
 
 class ProductProvider with ChangeNotifier {
+  final String _authToken;
+  final String _userId;
   List<Product> _items = [
     // Product(
     //   id: 'p1',
@@ -54,6 +56,12 @@ class ProductProvider with ChangeNotifier {
     //it return copy of items.. All the object in flutter are reference type
   }
 
+  // void update(String token, String userId) {
+  //   authToken = token;
+  //   _userId = userId;
+  // }
+  ProductProvider(this._userId, this._items, this._authToken);
+
   List<Product> get favProduct {
     return _items.where((element) => element.favourite).toList();
   }
@@ -76,14 +84,19 @@ class ProductProvider with ChangeNotifier {
   }
 
   Future<void> fetchAndSetProduct() async {
-    const url = 'https://myshop-7287e.firebaseio.com/products.json';
+    //String a = '?auth=$authToken';
+    //int autht = int.parse(authToken);
+    var url =
+        'https://myshop-7287e.firebaseio.com/products.json?auth=$_authToken';
+
     try {
       final response = await https.get(url);
       // print(json.decode(response.body));
       List<Product> loadingproduct = [];
       var jsondata = json.decode(response.body) as Map<String, dynamic>;
       if (jsondata == null) {
-        return;
+        //return;
+        print("null");
       }
       jsondata.forEach((prodId, prodValue) {
         loadingproduct.add(Product(
@@ -102,7 +115,8 @@ class ProductProvider with ChangeNotifier {
   }
 
   Future<void> addProduct(Product product) async {
-    const url = 'https://myshop-7287e.firebaseio.com/products.json';
+    final url =
+        'https://myshop-7287e.firebaseio.com/products.json?auth=$_authToken';
     try {
       final response = await https.post(url,
           body: json.encode({
@@ -132,7 +146,8 @@ class ProductProvider with ChangeNotifier {
   }
 
   Future<void> updateProduct(String id, Product product) async {
-    final url = 'https://myshop-7287e.firebaseio.com/products/$id.json';
+    final url =
+        'https://myshop-7287e.firebaseio.com/products/$id.json?auth=$_authToken';
     //here with / we go deep  dive and must make it final
     await https.patch(url,
         body: json.encode({
@@ -151,7 +166,8 @@ class ProductProvider with ChangeNotifier {
   }
 
   void deleteproduct(String id) {
-    final url = 'https://myshop-7287e.firebaseio.com/products/$id.json';
+    final url =
+        'https://myshop-7287e.firebaseio.com/products/$id.json?auth=$_authToken';
     final existingProductindex =
         _items.indexWhere((element) => element.id == id);
     var existingproduct = _items[existingProductindex];

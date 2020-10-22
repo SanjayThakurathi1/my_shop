@@ -24,10 +24,11 @@ class Product with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> favtoggle() async {
+  Future<void> favtoggle(String token) async {
     final oldStatus = favourite;
     favourite = !favourite;
-    final url = 'https://myshop-7287e.firebaseio.com/products/$id.json';
+    final url =
+        'https://myshop-7287e.firebaseio.com/products/$id.json?auth=$token';
     try {
       final response =
           await https.patch(url, body: jsonEncode({'isFavourite': favourite}));
