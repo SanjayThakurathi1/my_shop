@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter/cupertino.dart';
-import 'package:my_shop/Models/auth_user.dart';
+import 'package:my_shop/provider/auth_user.dart';
 import 'package:my_shop/Screens/4.1%20auth_screen.dart.dart';
 import 'package:my_shop/Screens/Scaffoldscreen.dart';
 import 'package:my_shop/Screens/cart_screen.dart';
@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
         MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: Auth()),
-        //ChangeNotifierProvider.value(value: ProductProvider()),
+
         ChangeNotifierProxyProvider<Auth, ProductProvider>(
             create: null,
             update: (ctx, auth, pp) => ProductProvider(
@@ -44,8 +44,10 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(value: Cart()),
         ChangeNotifierProxyProvider<Auth, Orders>(
             create: null,
-            update: (ctx, auth, order) =>
-                Orders(order == null ? [] : order.orderlist, auth.tokens)),
+            update: (ctx, auth, order) => Orders(
+                order == null ? [] : order.orderlist,
+                auth.tokens,
+                auth.userId)),
 
         //ChangeNotifierProvider.value(value: Orders()),
       ],
@@ -57,7 +59,15 @@ class MyApp extends StatelessWidget {
               accentColor: Colors.deepOrange,
               fontFamily: 'Lato'),
           title: "MyShop",
-          home: auth.isAuth ? Scaffoldscreen() : AuthScreen(),
+          home: auth.isAuth
+              ? Scaffoldscreen()
+              : FutureBuilder(
+                  future: auth.tryautologin(),
+                  builder: (context, authresultsnapshot) =>
+                      authresultsnapshot.connectionState ==
+                              ConnectionState.waiting
+                          ? CircularProgressIndicator()
+                          : AuthScreen()),
           // home: Scaffoldscreen(),
           routes: {
             ProductDetail.routeName: (context) => ProductDetail(),

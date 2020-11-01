@@ -7,7 +7,7 @@ class EditProductScreen extends StatefulWidget {
   static const routeName = '/editproductscreen';
   @override
   _EditProductScreenState createState() => _EditProductScreenState();
-             }
+}
 
 class _EditProductScreenState extends State<EditProductScreen> {
   final _priceFocusNode = FocusNode();

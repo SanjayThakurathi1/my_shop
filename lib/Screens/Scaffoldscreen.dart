@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:my_shop/Screens/cart_screen.dart';
+import 'package:my_shop/Screens/productdetail.dart';
 import 'package:my_shop/provider/cart.dart';
+import 'package:my_shop/provider/product.dart';
 
 import 'package:my_shop/provider/product_provider.dart';
 import 'package:my_shop/widgets/badge.dart';
@@ -63,6 +65,15 @@ class _ScaffoldscreenState extends State<Scaffoldscreen> {
             appBar: AppBar(
               title: Text("MyShop"),
               actions: [
+                IconButton(
+                    icon: Icon(
+                      Icons.search,
+                      color: Colors.black,
+                      size: 29,
+                    ),
+                    onPressed: () {
+                      showSearch(context: context, delegate: Productsearch());
+                    }),
                 Consumer<Cart>(
                   builder: (_, cart, ch) => Badge(
                     child: ch,
@@ -118,5 +129,91 @@ class _ScaffoldscreenState extends State<Scaffoldscreen> {
             ),
             child: HomeScreen(),
           );
+  }
+}
+
+class Productsearch extends SearchDelegate<String> {
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(
+          icon: Icon(Icons.clear),
+          onPressed: () {
+            query = "";
+          })
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+        icon: Icon(Icons.arrow_back),
+        onPressed: () {
+          close(context, null);
+        });
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    // final producttag =
+    //     Provider.of<ProductProvider>(context, listen: false).items;
+
+    return Center(
+      child: Text("No Result Found"),
+    );
+    // : ListView.builder(
+    //     itemCount: producttag.length,
+    //     itemBuilder: (context, index) => GestureDetector(
+    //         onTap: () {
+    //           Navigator.pushNamed(context, ProductDetail.routeName,
+    //               arguments: producttag[index].id);
+    //         },
+    //         child: ListTile(
+    //             title: Text(producttag
+    //                 .where((element) =>
+    //                     element.title.toLowerCase().contains(query))
+    //                 .toList()
+    //                 .toString()))));
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    final producttag =
+        Provider.of<ProductProvider>(context, listen: false).items;
+    final recentproducts =
+        Provider.of<ProductProvider>(context, listen: false).favProduct;
+
+    List<Product> suggestionproduct = query.isEmpty
+        ? recentproducts
+        : producttag
+            .where((element) => element.title.toLowerCase().contains(query))
+            .toList();
+    return ListView.builder(
+      itemBuilder: (context, index) => ListTile(
+        onTap: () {
+          // showResults(context);
+          Navigator.pushNamed(context, ProductDetail.routeName,
+              arguments: suggestionproduct[index].id);
+          query = suggestionproduct[index].title;
+        },
+        trailing: Image.network(suggestionproduct[index].imageUrl),
+        title:
+            //Text(suggestionproduct[index].price.toString()),
+            RichText(
+                text: TextSpan(
+                    text: suggestionproduct[index]
+                        .title
+                        .toLowerCase()
+                        .substring(0, query.length),
+                    style: TextStyle(
+                        color: Colors.green, fontWeight: FontWeight.bold),
+                    children: [
+              TextSpan(
+                  text: suggestionproduct[index].title.substring(query.length),
+                  style: TextStyle(color: Colors.grey))
+            ])),
+      ),
+      itemCount: suggestionproduct.length,
+    );
   }
 }

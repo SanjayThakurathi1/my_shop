@@ -10,6 +10,15 @@ import 'package:http/http.dart' as https;
 class ProductProvider with ChangeNotifier {
   final String _authToken;
   final String _userId;
+
+  String get userId {
+    return _userId;
+  }
+
+  String get authtoken {
+    return _authToken;
+  }
+
   List<Product> _items = [
     // Product(
     //   id: 'p1',
@@ -60,6 +69,7 @@ class ProductProvider with ChangeNotifier {
   //   authToken = token;
   //   _userId = userId;
   // }
+  static const _CREATOR_ID = 'creatorId';
   ProductProvider(this._userId, this._items, this._authToken);
 
   List<Product> get favProduct {
@@ -83,21 +93,25 @@ class ProductProvider with ChangeNotifier {
     );
   }
 
-  Future<void> fetchAndSetProduct() async {
-    //String a = '?auth=$authToken';
-    //int autht = int.parse(authToken);
+  Future<void> fetchAndSetProduct([bool filterByUser = false]) async {
+    final filterString =
+        filterByUser ? 'orderBy="$_CREATOR_ID"&equalTo="$_userId"' : "";
+
     var url =
-        'https://myshop-7287e.firebaseio.com/products.json?auth=$_authToken';
+        'https://myshop-7287e.firebaseio.com/products.json?auth=$_authToken&$filterString';
 
     try {
       final response = await https.get(url);
-      // print(json.decode(response.body));
+
       List<Product> loadingproduct = [];
-      var jsondata = json.decode(response.body) as Map<String, dynamic>;
+      var jsondata = json.decode(response.body); // as Map<String, dynamic>;
       if (jsondata == null) {
-        //return;
-        print("null");
+        return;
       }
+      url =
+          'https://myshop-7287e.firebaseio.com/userFavourite/$_userId.json?auth=$_authToken';
+      final favouriteresponse = await https.get(url);
+      final favdata = jsonDecode(favouriteresponse.body);
       jsondata.forEach((prodId, prodValue) {
         loadingproduct.add(Product(
             id: prodId,
@@ -105,12 +119,13 @@ class ProductProvider with ChangeNotifier {
             price: prodValue['price'],
             imageUrl: prodValue['imgUrl'],
             title: prodValue['title'],
-            favourite: prodValue['isFavourite']));
+            favourite: favdata == null ? false : favdata[prodId] ?? false));
       });
       _items = loadingproduct;
       notifyListeners();
     } catch (e) {
-      throw (e);
+      // throw (e);
+      print(e);
     }
   }
 
@@ -124,7 +139,7 @@ class ProductProvider with ChangeNotifier {
             'price': product.price,
             'description': product.description,
             'imgUrl': product.imageUrl,
-            'isFavourite': product.favourite,
+            'creatorId': userId
           }));
 
       //print(json.decode(response.body)['name']);
@@ -154,8 +169,8 @@ class ProductProvider with ChangeNotifier {
           'title': product.title,
           'description': product.description,
           'price': product.price,
-          'imgUrl': product
-              .imageUrl, //we we didnt add fav becoz if we dont add then it just replace other and aad it on it
+          'imgUrl': product.imageUrl,
+          //we we didnt add fav becoz if we dont add then it just replace other and aad it on it
         }));
 
     final prodindex = _items.indexWhere((prod) => prod.id == id);

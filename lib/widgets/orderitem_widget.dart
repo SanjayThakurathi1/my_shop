@@ -15,28 +15,41 @@ class _OrderitemState extends State<Orderitem> {
   bool expands = false;
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.all(12),
-      child: Column(
-        children: [
-          ListTile(
-            title: Text(widget.orderItem.amount.toString()),
-            subtitle:
-                // Text(DateFormat('dd/mm/yyyy hh:mm').format(orderItem.date)),
-                Text(
-              DateFormat.yMEd().add_jms().format(widget.orderItem.date),
+    return AnimatedContainer(
+      height: expands
+          ? min(widget.orderItem.cartitems.length * 20.0 + 180, 320)
+          : 110,
+      duration: Duration(
+        milliseconds: 300,
+      ),
+      curve: Curves.easeIn,
+      child: Card(
+        margin: EdgeInsets.all(12),
+        child: Column(
+          children: [
+            ListTile(
+              title: Text(widget.orderItem.amount.toString()),
+              subtitle:
+                  // Text(DateFormat('dd/mm/yyyy hh:mm').format(orderItem.date)),
+                  Text(
+                DateFormat.yMEd().add_jms().format(widget.orderItem.date),
+              ),
+              trailing: IconButton(
+                  icon: Icon(expands ? Icons.expand_less : Icons.expand_more),
+                  onPressed: () {
+                    setState(() {
+                      expands = !expands;
+                    });
+                  }),
             ),
-            trailing: IconButton(
-                icon: Icon(expands ? Icons.expand_more : Icons.expand_less),
-                onPressed: () {
-                  setState(() {
-                    expands = !expands;
-                  });
-                }),
-          ),
-          if (expands)
-            Container(
-              height: min(widget.orderItem.cartitems.length * 20.0 + 100, 180),
+            AnimatedContainer(
+              duration: Duration(
+                milliseconds: 300,
+              ),
+              curve: Curves.easeIn,
+              height: expands
+                  ? min(widget.orderItem.cartitems.length * 20.0 + 80, 320)
+                  : 0,
               child: ListView(
                 children: widget.orderItem.cartitems
                     .map((cartitemss) => Row(
@@ -44,11 +57,11 @@ class _OrderitemState extends State<Orderitem> {
                           children: [
                             Text(cartitemss.title ?? ''),
                             SizedBox(
-                              height: 12,
+                              height: 22,
                             ),
                             Text(cartitemss.price.toString() ?? ""),
                             SizedBox(
-                              height: 12,
+                              height: 22,
                             ),
                             Text('${cartitemss.quantity ?? ""}x'),
                           ],
@@ -56,7 +69,8 @@ class _OrderitemState extends State<Orderitem> {
                     .toList(),
               ),
             )
-        ],
+          ],
+        ),
       ),
     );
   }
