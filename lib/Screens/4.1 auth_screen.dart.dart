@@ -109,8 +109,11 @@ class _AuthCardState extends State<AuthCard>
   @override
   void initState() {
     super.initState();
-    _animationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 300));
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 300),
+    );
+    // AnimationController(vsync: this, duration: Duration(milliseconds: 300));
     _animation = Tween(begin: 0.0, end: 1.0).animate(
         CurvedAnimation(parent: _animationController, curve: Curves.easeIn));
   }
