@@ -1,4 +1,4 @@
- # Notebook
+ # My_Shop
 
 _A new Flutter project with darkmode 
 
@@ -8,7 +8,8 @@ _A new Flutter project with darkmode
 
 
 # use of firebase real time database for storing  products 
-# perform CRUD operation 
+# perform CRUD operation (http get,post,delete,patch)
+
 
 
  **Use sharedPreference for storage of token of firebase,
@@ -21,23 +22,70 @@ _A new Flutter project with darkmode
 ---
 
 
- <img src ="/Assets/appscreenshot/1.jpg" width=330 height=650>
+ <img src ="/Assets/appScreenshot/1.jpg" width=330 height=650>
  
  
  ***
- <img src ="/Assets/appscreenshot/2.jpg" width=330 height=650>
+ <img src ="/Assets/appScreenshot/2.jpg" width=330 height=650>
  
  
  ***
  
- <img src ="/Assets/appscreenshot/3.jpg" width=330 height=650>
+ <img src ="/Assets/appScreenshot/3.jpg" width=330 height=650>
  ***
  
  
- <img src ="/Assets/appscreenshot/4.jpg" width=330 height=650>
+ <img src ="/Assets/appScreenshot/4.jpg" width=330 height=650>
  ****
  
  
 
-<img src ="/Assets/appscreenshot/5.jpg" width=330 height=650>
+<img src ="/Assets/appScreenshot/5.jpg" width=330 height=650>
+
+
+ 
+ ***
+ 
+ <img src ="/Assets/appScreenshot/6.jpg" width=330 height=650>
+ ***
+ 
+  
+ ***
+ 
+ <img src ="/Assets/appScreenshot/7.jpg" width=330 height=650>
+ ***
+  
+ ***
+ 
+ <img src ="/Assets/appScreenshot/8.jpg" width=330 height=650>
+ ***
+ 
+  
+ ***
+ 
+ <img src ="/Assets/appScreenshot/9.jpg" width=330 height=650>
+ ***
+ 
+  
+ ***
+ 
+ <img src ="/Assets/appScreenshot/10.jpg" width=330 height=650>
+ ***
+ 
+  
+ ***
+ 
+ <img src ="/Assets/appScreenshot/11.jpg" width=330 height=650>
+ ***
+  
+ ***
+ 
+ <img src ="/Assets/appScreenshot/12.jpg" width=330 height=650>
+ ***
+ 
+ 
+ 
+ 
+ 
+ 
 ---
