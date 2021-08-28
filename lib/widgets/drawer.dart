@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:my_shop/Screens/4.1%20auth_screen.dart.dart';
+
 import 'package:my_shop/Screens/order_screen.dart';
+import 'package:my_shop/Screens/termandcondition.dart';
 import 'package:my_shop/Screens/user_product_screen.dart';
-import 'package:my_shop/provider/product_provider.dart';
+
 import 'package:provider/provider.dart';
 import '../provider/auth_user.dart';
+import '../Screens/termandcondition.dart';
 
 class Draweer extends StatelessWidget {
   @override
@@ -41,6 +43,8 @@ class Draweer extends StatelessWidget {
             onTap: () {
               Navigator.of(context)
                   .pushReplacementNamed(UserProductScreen.routeName);
+              // Navigator.of(context)
+              //     .pushReplacementNamed(Termandcondition.routeName);
             },
           ),
           Divider(),
@@ -55,6 +59,14 @@ class Draweer extends StatelessWidget {
             },
           ),
           Divider(),
+          // ListTile(
+          //   leading: Icon(Icons.home),
+          //   title: Text("Welcome Screen"),
+          //   onTap: () {
+          //     Navigator.of(context)
+          //         .pushReplacementNamed(WelcomeScreen.routeName);
+          //   },
+          // ),
         ],
       ),
     );

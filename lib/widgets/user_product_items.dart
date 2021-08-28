@@ -35,7 +35,7 @@ class UserProductItem extends StatelessWidget {
                 onPressed: () {
                   Provider.of<ProductProvider>(context, listen: false)
                       .deleteproduct(id);
-                  Scaffold.of(context).showSnackBar(SnackBar(
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     content: Text("Deleted Sucessfully"),
                   ));
                 }),

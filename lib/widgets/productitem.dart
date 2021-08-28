@@ -36,7 +36,7 @@ class ProductItems extends StatelessWidget {
                         ? Icons.favorite
                         : Icons.favorite_border,
                     size: 30,
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).errorColor,
                   ),
                   onPressed: () {
                     toglevalue.favtoggle(authtoken.tokens, authtoken.userId);
@@ -56,8 +56,11 @@ class ProductItems extends StatelessWidget {
                   );
 
                   //Scaffold.of(context).openDrawer();
-                  Scaffold.of(context).hideCurrentSnackBar();
-                  Scaffold.of(context).showSnackBar(SnackBar(
+                  //Scaffold.of(context).hideCurrentSnackBar(); //depreciated feature
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                  ScaffoldMessenger.of(context).showSnackBar
+                      // Scaffold.of(context).showSnackBar
+                      (SnackBar(
                     content: Text(
                       "Added item to Cart",
                       textAlign: TextAlign.center,

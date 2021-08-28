@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter/cupertino.dart';
+import 'package:my_shop/Screens/login_screen.dart';
+import 'package:my_shop/Screens/termandcondition.dart';
 import 'package:my_shop/provider/auth_user.dart';
 import 'package:my_shop/Screens/4.1%20auth_screen.dart.dart';
 import 'package:my_shop/Screens/Scaffoldscreen.dart';
@@ -74,7 +76,9 @@ class MyApp extends StatelessWidget {
             CartScreen.routeName: (context) => CartScreen(),
             OrderScreen.routeName: (context) => OrderScreen(),
             UserProductScreen.routeName: (context) => UserProductScreen(),
-            EditProductScreen.routeName: (context) => EditProductScreen()
+            EditProductScreen.routeName: (context) => EditProductScreen(),
+            WelcomeScreen.routeName: (context) => WelcomeScreen(),
+            Termandcondition.routeName: (context) => Termandcondition(),
           },
         ),
       ),

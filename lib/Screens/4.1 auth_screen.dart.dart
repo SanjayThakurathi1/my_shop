@@ -103,6 +103,20 @@ class _AuthCardState extends State<AuthCard>
   };
 
   var _isLoading = false;
+  bool changeeye = true;
+  bool changeeye1 = true;
+  void toogleeye() {
+    setState(() {
+      changeeye = !changeeye;
+    });
+  }
+
+  void toogleeye1() {
+    setState(() {
+      changeeye1 = !changeeye1;
+    });
+  }
+
   final _passwordController = TextEditingController();
   AnimationController _animationController;
   Animation<double> _animation;
@@ -207,6 +221,7 @@ class _AuthCardState extends State<AuthCard>
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
+
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
@@ -238,8 +253,18 @@ class _AuthCardState extends State<AuthCard>
                   },
                 ),
                 TextFormField(
-                  decoration: InputDecoration(labelText: 'Password'),
-                  obscureText: true,
+                  decoration: InputDecoration(
+                      suffixIcon: IconButton(
+                        color: changeeye ? Colors.black : Colors.red,
+                        icon: Icon(Icons.remove_red_eye),
+                        onPressed: () {
+                          toogleeye();
+                        },
+                      ),
+                      // Icon(Icons.remove_red_eye),
+
+                      labelText: 'Password'),
+                  obscureText: changeeye,
                   controller: _passwordController,
                   validator: (value) {
                     if (value.isEmpty || value.length < 5) {
@@ -253,8 +278,16 @@ class _AuthCardState extends State<AuthCard>
                 if (_authMode == AuthMode.Signup)
                   TextFormField(
                     enabled: _authMode == AuthMode.Signup,
-                    decoration: InputDecoration(labelText: 'Confirm Password'),
-                    obscureText: true,
+                    decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                          color: changeeye1 ? Colors.black : Colors.red,
+                          icon: Icon(Icons.remove_red_eye),
+                          onPressed: () {
+                            toogleeye1();
+                          },
+                        ),
+                        labelText: 'Confirm Password'),
+                    obscureText: changeeye1,
                     validator: _authMode == AuthMode.Signup
                         ? (value) {
                             if (value != _passwordController.text) {
