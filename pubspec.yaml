@@ -1,7 +1,7 @@
 name: botton_nav_bar
 description: A buttom nav bar package is a custom package for bottom nav bar with this package you can easily make custom buttom nav bar
-version: 0.0.2
-homepage: https://github.com/SanjayThakurathi1/buttom_nav_bar
+version: 0.0.4
+homepage: https://github.com/SanjayThakurathi1/bottom_nav_bar.git
 
 environment:
   sdk: '>=2.18.2 <3.0.0'

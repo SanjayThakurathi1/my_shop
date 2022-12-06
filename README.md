@@ -11,7 +11,7 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages).
 -->
 
-A lightweight, customizable navigation bar widget for flutter which can be used as a FAB as well as a fixed Widget where you can change position of FAB with elevation
+A lightweight, customizable navigation bar widget for flutter which can be used as a FAB as well as a fixed Widget where you can change position of FAB with elevation 
 
 ## Features
     Customization(you can customize nav bar as per your requirement)
@@ -22,11 +22,11 @@ items - navigation items, required more than one item
 selectedIndex - the current item index. Use this to change the selected item. Defaults to zero
 onItemSelected - required to listen when an item is tapped it provides the selected item's index
 backgroundColor - the navigation bar's background color
-showElevation - if false the appBar's elevation will be removed
-containerHeight - changes the Navigation Bar's height
+ 
+ 
 selectedColor - Color of a selected index
 label - Name of Scrren 
-screen - Widget/Screen you want to Show
+screen - Widget/Screen you want to Show navigation items, required more than one item 
 
 BottomNavyBarItem
 
@@ -40,6 +40,13 @@ textAlign - property to change the alignment of the item title
 Add the dependency in pubspec.yaml:
 
 ## Usage
+
+
+
+ 
+## Additional information
+
+
 
 @override
   Widget build(BuildContext context) => Scaffold(
@@ -74,8 +81,5 @@ Add the dependency in pubspec.yaml:
           ],
         ),
       );
-
- 
-## Additional information
 
  
