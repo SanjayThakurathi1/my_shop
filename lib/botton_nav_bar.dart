@@ -19,14 +19,19 @@ class BottomBarItem {
   ///Selected Icon of a NavigationBar
   Widget? icon;
 
+  ///Icon of bottom nav bar
   IconData? selectedIcon;
 
+  ///selected item color
   Color? bottomItemSelectedColor;
+
+  ///unselected bottomNav bar item color
   Color? bottomItemUnSelectedColor;
 
   ///label represts the title of NavBar
   String label;
-  //
+
+  /// title for Floating action button
   String? centerDockedTitle;
 }
 
@@ -118,7 +123,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   int _pageIndex = 0;
   @override
   Widget build(BuildContext context) => Scaffold(
-        body: widget.bottomItems[_pageIndex].screen!,
+        body: widget.bottomItems[_pageIndex].screen,
         floatingActionButtonLocation: widget.floatingActionButtonLocation ??
             FloatingActionButtonLocation.centerDocked,
         floatingActionButton: SizedBox(

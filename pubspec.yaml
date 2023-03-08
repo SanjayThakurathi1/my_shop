@@ -1,6 +1,6 @@
 name: botton_nav_bar
-description: A buttom nav bar package is a custom package for bottom nav bar with this package you can easily make custom buttom nav bar
-version: 0.0.4
+description: The botton_nav_bar library is a custom implementation of the bottom navigation bar in Flutter. The library provides a customizable bottom navigation bar widget that allows users to navigate between different screens in an application. It is built to be flexible and can be adapted to fit any app's design
+version: 0.0.5
 homepage: https://github.com/SanjayThakurathi1/bottom_nav_bar.git
 
 environment:
