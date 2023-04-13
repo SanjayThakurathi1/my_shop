@@ -18,10 +18,15 @@ No changes to the code or functionality of the package
 ## 0.1.2
 Added notched shape in the center of bottom navigation bar
 Created a custom class CustomNotchedShape which extends the NotchedShape class and overrides the getOuterPath method to return the desired notched path.
- 
 Modified the BottomNavigationBar widget to use the CustomNotchedShape class for the center item.
 Added a notchRadius parameter to the CustomNotchedShape class to customize the radius of the notched shape.
 Updated the app's UI to display the new notched shape in the center of the bottom navigation bar.
+## 0.1.3
+screenshot added
+## 0.1.4
+screenshot added
+## 0.1.5
+screenshot added
 
 
  

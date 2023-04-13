@@ -87,7 +87,7 @@ These parameters can be used to customize and configure the bottom navigation ba
 ## _Getting_ _started_
 ```dart
 dependencies:
-  botton_nav_bar: ^0.1.4
+  botton_nav_bar: ^0.1.5
 ```
  
  ***
