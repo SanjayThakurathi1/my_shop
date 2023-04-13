@@ -87,17 +87,17 @@ These parameters can be used to customize and configure the bottom navigation ba
 ## _Getting_ _started_
 ```dart
 dependencies:
-  botton_nav_bar: ^0.1.3
+  botton_nav_bar: ^0.1.4
 ```
  
  ***
  
- <img src ="/lib/screen_shot/design2.png" width=330 height=650>
+ <img src ="lib/screen_shot/design2.png" width=330 height=650>
  ***
 
   ***
  
- <img src ="/lib/screen_shot/design3.png" width=330 height=650>
+ <img src ="lib/screen_shot/design3.png" width=330 height=650>
  ***
   
 ## _Package_ _Implementation_
@@ -144,12 +144,12 @@ class MyApp extends StatelessWidget {
 ```
 ***
  
- <img src ="/lib/screen_shot/design1.png" width=330 height=650>
+ <img src ="lib/screen_shot/design1.png" width=330 height=650>
  ***
  
   ***
  
- <img src ="/lib/screen_shot/design4.png" width=330 height=650>
+ <img src ="lib/screen_shot/design4.png" width=330 height=650>
  ***
 
 ```dart
