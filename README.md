@@ -87,11 +87,21 @@ These parameters can be used to customize and configure the bottom navigation ba
 ## _Getting_ _started_
 ```dart
 dependencies:
-  botton_nav_bar: ^0.1.2
+  botton_nav_bar: ^0.1.3
 ```
  
+ ***
+ 
+ <img src ="/lib/screen_shot/design2.png" width=330 height=650>
+ ***
 
+  ***
+ 
+ <img src ="/lib/screen_shot/design3.png" width=330 height=650>
+ ***
+  
 ## _Package_ _Implementation_
+   without notch
 ```dart
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 
@@ -100,7 +110,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
         body: BottomNavBar(
           notchedRadius: 30,
-          centerNotched: true,
+          centerNotched: false,
           fabIcon: Icon(Icons.qr_code),
           bottomItems: <BottomBarItem>[
             BottomBarItem(
@@ -132,7 +142,59 @@ class MyApp extends StatelessWidget {
       );
 }
 ```
-  
+***
+ 
+ <img src ="/lib/screen_shot/design1.png" width=330 height=650>
+ ***
+ 
+  ***
+ 
+ <img src ="/lib/screen_shot/design4.png" width=330 height=650>
+ ***
+
+```dart
+with notch 
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) => Scaffold(
+        body: BottomNavBar(
+          fabChild: Text(
+            'scan',
+            style: TextStyle(color: Colors.amber),
+          ),
+          notchedRadius: 30,
+          centerNotched: true,
+          fabIcon: Icon(Icons.qr_code),
+          bottomItems: <BottomBarItem>[
+            BottomBarItem(
+              bottomItemSelectedColor: Colors.green,
+              label: 'Screen 1',
+              screen: Center(child: const Text('A')),
+              selectedIcon: Icons.collections_bookmark_outlined,
+            ),
+            BottomBarItem(
+              bottomItemSelectedColor: Colors.green,
+              label: 'Screen 2',
+              screen: Center(child: const Text('B')),
+              selectedIcon: Icons.search_rounded,
+            ),
+            BottomBarItem(
+              bottomItemSelectedColor: Colors.green,
+              label: 'Screen 3',
+              selectedIcon: Icons.menu_open_rounded,
+              screen: Center(child: const Text('C')),
+            ),
+            BottomBarItem(
+              bottomItemSelectedColor: Colors.green,
+              label: 'Screen 4',
+              screen: Center(child: const Text('D')),
+              selectedIcon: Icons.notifications_active,
+            )
+          ],
+        ),
+      );
+}
+  ```
 
 
  
