@@ -1,5 +1,6 @@
 library botton_nav_bar;
 
+import 'package:botton_nav_bar/src/notched_shape.dart';
 import 'package:flutter/material.dart';
 
 ///this is a model for custom navigatorBar with following parameter
@@ -10,6 +11,7 @@ class BottomBarItem {
     required this.label,
     required this.screen,
     this.centerDockedTitle,
+    this.bottomItemSelectedColor,
     this.icon,
   });
 
@@ -57,6 +59,8 @@ class BottomNavBar extends StatefulWidget {
     this.bottomNavItemIconHeight,
     this.bottomNavItemLabelHeight,
     this.onPressFAB,
+    this.notchedRadius,
+    this.centerNotched = false,
     super.key,
   });
 
@@ -113,6 +117,11 @@ class BottomNavBar extends StatefulWidget {
   /// function for fab
   final Function()? onPressFAB;
 
+  /// u want notched center or not
+  final bool centerNotched;
+
+  final double? notchedRadius;
+
   @override
   _BottomNavBarState createState() => _BottomNavBarState();
 }
@@ -135,13 +144,15 @@ class _BottomNavBarState extends State<BottomNavBar> {
             elevation: widget.fabElevation ?? 20,
             child: widget.fabIcon ??
                 Icon(
-                  Icons.add,
+                  Icons.qr_code,
                   size: 40,
                 ),
           ),
         ),
-        bottomNavigationBar: ColoredBox(
-          color: widget.bottomNavBarColor ?? Colors.white,
+        bottomNavigationBar: BottomAppBar(
+          shape: widget.centerNotched
+              ? CenterNotchedShape(notchRadius: widget.notchedRadius!)
+              : null,
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             child: Row(
